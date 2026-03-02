@@ -173,6 +173,7 @@ function setup() {
  */
 
 function init() {
+  console.log('Initialize AEM scripts',window.origin);
   setup();
   sampleRUM.collectBaseURL = window.origin;
   sampleRUM();

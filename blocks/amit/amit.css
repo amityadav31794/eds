@@ -1,0 +1,38 @@
+/* Amit Block - Image + Content Layout */
+
+.amit-component-wrapper {
+    position: relative;
+    display: flex !important;
+    align-items: center;
+}
+.amit-container {
+ padding: 0px !important;
+  width: 100% !important;
+}
+.amit-wrapper {
+    padding: 0px !important;
+    margin: unset !important;
+    max-width: 100% !important;
+    overflow: hidden;
+}
+.content {
+    color: white;
+    position: absolute;
+    padding: 20px;
+}
+
+.buttonGroup {
+    padding: 10px 5px;
+    gap: 10px;
+}
+
+.buttonGroup button {
+    padding: 10px 20px;
+    border: none;
+    background-color: aqua;
+    margin-right: 10px;
+}
+
+h1 {
+    margin: unset;
+}
