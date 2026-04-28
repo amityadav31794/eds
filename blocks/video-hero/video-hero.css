@@ -1,0 +1,132 @@
+/* Video Hero Block */
+main > .section:has(.video-hero-wrapper) {
+  margin: 0;
+}
+
+.video-hero-wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+.video-hero-wrapper .video-hero {
+  --vhero-bg: #1a1a4e;
+  --vhero-text: #ffffff;
+  --vhero-padding: 40px 24px;
+  --vhero-gap: 40px;
+
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--vhero-bg);
+  color: var(--vhero-text);
+  padding: var(--vhero-padding);
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.video-hero .video-hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--vhero-gap);
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.video-hero .video-hero-text {
+  max-width: 500px;
+}
+
+.video-hero .video-hero-text h1 {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 0 0 12px;
+  color: var(--vhero-text);
+}
+
+.video-hero .video-hero-text h2 {
+  font-size: 32px;
+  font-weight: 300;
+  line-height: 1.25;
+  margin: 0;
+  color: var(--vhero-text);
+}
+
+.video-hero .video-hero-video {
+  max-width: 420px;
+}
+
+.video-hero .video-hero-player {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.video-hero .video-hero-player::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(3, 153, 212, 0.2), rgba(33, 120, 202, 0.2));
+  pointer-events: none;
+}
+
+.video-hero .video-hero-player picture,
+.video-hero .video-hero-player img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-hero .video-hero-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  cursor: pointer;
+}
+
+.video-hero .video-hero-play svg {
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+@media (width >= 900px) {
+  .video-hero-wrapper .video-hero {
+    --vhero-padding: 48px 64px;
+    min-height: 560px;
+  }
+
+  .video-hero .video-hero-content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+  }
+
+  .video-hero .video-hero-text {
+    flex: 1;
+    max-width: 42%;
+  }
+
+  .video-hero .video-hero-text h1 {
+    font-size: 16px;
+  }
+
+  .video-hero .video-hero-text h2 {
+    font-size: 38px;
+  }
+
+  .video-hero .video-hero-video {
+    flex: 0 0 38%;
+    max-width: 480px;
+  }
+}
