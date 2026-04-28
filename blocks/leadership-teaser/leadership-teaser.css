@@ -1,0 +1,73 @@
+.leadership-teaser {
+  --lt-heading-color: rgb(43, 43, 128);
+  --lt-btn-bg: rgb(65, 61, 201);
+  --lt-btn-color: #fff;
+  --lt-btn-radius: 8px;
+  --lt-btn-padding: 20px 36px;
+  --lt-section-padding: 48px 24px;
+
+  padding: var(--lt-section-padding);
+  display: flex;
+  justify-content: center;
+}
+
+.leadership-teaser > div {
+  max-width: 700px;
+  width: 100%;
+}
+
+.leadership-teaser h3 {
+  color: var(--lt-heading-color);
+  font-weight: 300;
+  font-size: 28px;
+  line-height: 1.4;
+  margin: 0 0 24px;
+}
+
+main .leadership-teaser a.button:any-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--lt-btn-bg);
+  color: var(--lt-btn-color);
+  border: 4px solid var(--lt-btn-bg);
+  border-radius: var(--lt-btn-radius);
+  padding: var(--lt-btn-padding);
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+main .leadership-teaser a.button:any-link:hover {
+  opacity: 0.9;
+}
+
+main .leadership-teaser a.button:any-link::after {
+  content: "→";
+  font-size: 1.2em;
+}
+
+main .leadership-teaser .button-wrapper {
+  margin-top: 24px;
+}
+
+@media (width >= 900px) {
+  .leadership-teaser {
+    --lt-section-padding: 64px 32px;
+  }
+
+  .leadership-teaser > div {
+    max-width: 60%;
+    margin-left: 25%;
+  }
+
+  .leadership-teaser h3 {
+    font-size: 30px;
+  }
+
+  main .leadership-teaser a.button:any-link {
+    padding: 20px 36px;
+  }
+}
