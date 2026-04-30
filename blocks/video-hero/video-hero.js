@@ -10,6 +10,12 @@ export default async function decorate(block) {
   const bgRow = rows[2];
   const videoRow = rows[3];
 
+  // Brightcove video config (from source page)
+  const BRIGHTCOVE_ACCOUNT = '63783639001';
+  const BRIGHTCOVE_PLAYER = 'HJyMISizl_default';
+  const BRIGHTCOVE_VIDEO_ID = '6263803950001';
+  const BRIGHTCOVE_EMBED_URL = `https://players.brightcove.net/${BRIGHTCOVE_ACCOUNT}/${BRIGHTCOVE_PLAYER}/index.html?videoId=${BRIGHTCOVE_VIDEO_ID}`;
+
   // Extract background image
   const bgImg = bgRow?.querySelector('img');
   const bgSrc = bgImg?.src || '';
@@ -18,7 +24,6 @@ export default async function decorate(block) {
   if (bgSrc) {
     block.style.backgroundImage = `url('${bgSrc}')`;
   }
-  // Remove the bg image row from visible content
   if (bgRow) bgRow.remove();
 
   // Build content area
@@ -43,16 +48,71 @@ export default async function decorate(block) {
   if (videoImg) {
     const videoWrapper = document.createElement('div');
     videoWrapper.className = 'video-hero-player';
+    videoWrapper.setAttribute('role', 'button');
+    videoWrapper.setAttribute('tabindex', '0');
+    videoWrapper.setAttribute('aria-label', 'Play Zimmer Biomet Overview video');
     videoWrapper.appendChild(videoImg);
 
-    // Add play button overlay
+    // Play button overlay
     const playBtn = document.createElement('div');
     playBtn.className = 'video-hero-play';
-    playBtn.setAttribute('aria-label', 'Play video');
     playBtn.innerHTML = '<svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="30" fill="rgba(0,0,0,0.5)" stroke="#fff" stroke-width="2"/><polygon points="26,20 26,44 46,32" fill="#fff"/></svg>';
     videoWrapper.appendChild(playBtn);
 
     videoSection.appendChild(videoWrapper);
+
+    // --- Modal ---
+    const modal = document.createElement('div');
+    modal.className = 'video-hero-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Video player');
+    modal.innerHTML = `
+      <div class="video-hero-modal-overlay"></div>
+      <div class="video-hero-modal-content">
+        <button class="video-hero-modal-close" aria-label="Close video">&times;</button>
+        <div class="video-hero-modal-player"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalPlayer = modal.querySelector('.video-hero-modal-player');
+    const closeBtn = modal.querySelector('.video-hero-modal-close');
+    const overlay = modal.querySelector('.video-hero-modal-overlay');
+
+    function openModal() {
+      // Lazy-load iframe only when opened
+      if (!modalPlayer.querySelector('iframe')) {
+        const iframe = document.createElement('iframe');
+        iframe.src = BRIGHTCOVE_EMBED_URL;
+        iframe.setAttribute('allowfullscreen', '');
+        iframe.setAttribute('allow', 'autoplay; fullscreen; encrypted-media');
+        iframe.setAttribute('frameborder', '0');
+        modalPlayer.appendChild(iframe);
+      }
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+      // Pause video by removing src and re-adding on next open
+      const iframe = modalPlayer.querySelector('iframe');
+      if (iframe) iframe.remove();
+      videoWrapper.focus();
+    }
+
+    videoWrapper.addEventListener('click', openModal);
+    videoWrapper.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(); }
+    });
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
   }
 
   content.appendChild(textSection);
